@@ -31,8 +31,8 @@ require('./config/express')(app);
 // Create the service wrapper
 var personalityInsights = watson.personality_insights({
   version: 'v2',
-  username: '<username>',
-  password: '<password>'
+  username: '05f79519-8421-4d3f-863c-856addc7a3dc',
+  password: 'C0DXxTeYS1DN'
 });
 
 app.get('/', function(req, res) {

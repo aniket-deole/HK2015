@@ -74,6 +74,8 @@ $(document).ready(function() {
   $('.analysis-btn').click(function(){
     $('.analysis-btn').blur();
 
+    onSampleTextChange();
+
     // check if the captcha is active and the user complete it
     var recaptcha = grecaptcha.getResponse();
 
@@ -109,9 +111,23 @@ $(document).ready(function() {
           showError(response.error);
         } else {
           $results.show();
+
+          // Change personality text title
+          var politician = $("input[type='radio'][name='politician_name']:checked").val();
+          $("personality_text_title").text("Personality analysis for " + politician);
+          // $("personality_text_title").html( "New content." );
+
+
           showTraits(response);
           showTextSummary(response);
           showVizualization(response);
+
+
+
+
+
+
+
         }
 
       },
@@ -370,10 +386,11 @@ function showVizualization(theProfile) {
   }
 
   function onSampleTextChange() {
-    var isEnglish = $('#english_radio').is(':checked');
-    language = isEnglish ? 'en' : 'es';
+    
+    var politician = $("input[type='radio'][name='politician_name']:checked").val();
+    console.log("politician ==> " + politician);
 
-    $.get('/text/' + language + '.txt').done(function(text) {
+    $.get('/text/' + politician + '.txt').done(function(text) {
       $content.val(text);
       updateWordsCount();
     });
@@ -381,5 +398,5 @@ function showVizualization(theProfile) {
 
   onSampleTextChange();
   $content.keyup(updateWordsCount);
-  $('.sample-radio').change(onSampleTextChange);
+  $('.politician_name').change(onSampleTextChange);
 });
